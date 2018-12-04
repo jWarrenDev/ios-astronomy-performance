@@ -165,11 +165,13 @@ class PhotosCollectionViewController: UIViewController, UICollectionViewDataSour
             }
         }
         
+        filterOp.addDependency(fetchOp)
         cacheOp.addDependency(fetchOp)
         completionOp.addDependency(fetchOp)
         
         photoFetchQueue.addOperation(fetchOp)
         photoFetchQueue.addOperation(cacheOp)
+        imageFilterQueue.addOperation(filterOp)
         OperationQueue.main.addOperation(completionOp)
         
         operations[photoReference.id] = fetchOp
@@ -179,6 +181,7 @@ class PhotosCollectionViewController: UIViewController, UICollectionViewDataSour
     
     private let client = MarsRoverClient()
     private let cache = Cache<Int, UIImage>()
+    private let imageFilterQueue = OperationQueue()
     private let photoFetchQueue = OperationQueue()
     private var operations = [Int : Operation]()
     
