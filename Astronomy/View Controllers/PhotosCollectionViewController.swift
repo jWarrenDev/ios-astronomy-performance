@@ -166,8 +166,8 @@ class PhotosCollectionViewController: UIViewController, UICollectionViewDataSour
         }
         
         filterOp.addDependency(fetchOp)
-        cacheOp.addDependency(fetchOp)
-        completionOp.addDependency(fetchOp)
+        cacheOp.addDependency(filterOp)
+        completionOp.addDependency(filterOp)
         
         photoFetchQueue.addOperation(fetchOp)
         photoFetchQueue.addOperation(cacheOp)
